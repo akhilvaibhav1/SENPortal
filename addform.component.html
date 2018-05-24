@@ -1,0 +1,330 @@
+<form name="addForm" style="overflow: hidden;" onload="reset();">
+    <div style="padding-top: 3%;
+    padding-right: 1%;
+    padding-left: 4%;">
+        <span class="headingDiv">Forms : Add New Form</span>
+
+        <span class="infoMsg">Fields marked with an asterisk (<span style="color:red">*</span>) are required </span>
+        <br/><br/><br/>
+ <div class="col-md-12 nopadding" *blockUI="'addFormBlock'"> 
+        <legend class="subHeadingDiv">General Information</legend>
+        <div class="row">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-4">
+              
+                <span class="formLabel">Country<span style="color:red"> *</span></span>
+                <div [hidden]="reviewMode" class="formValues">
+                    <select id="country" name="country" placeholder="Select Country" class="commonWidth" [(ngModel)]="addData.country" (change)="onCountryChange()">
+            <option value=undefined disabled selected>Select</option>
+           <option *ngFor="let ctry of countryListResponse | slice:1" value={{ctry.countryName}}>{{ctry.countryName}}</option> 
+           
+            </select>
+                </div>
+                <div [hidden]="!reviewMode" class="formValues">{{addData.country}}</div><br>
+                <span class="formLabel">Bottling Partner<span style="color:red"> *</span></span>
+                <div [hidden]="reviewMode" class="formValues">
+                    <select id="bottler" name="bottler" placeholder="Select Bottler" class="commonWidth" [(ngModel)]="addData.btlrNm" [disabled]=(disableFields)>
+                    <option value=undefined disabled selected>Select</option>
+                    <option *ngFor="let bottlerList of bottlerListResponse | slice:1" value={{bottlerList.bottlingPartnerName}}>{{bottlerList.bottlingPartnerName}}</option>
+                     <!-- <option value="PBC">PBC</option>
+                     <option value="IBI">IBI</option> -->
+                  </select>
+                </div>
+                <div [hidden]="!reviewMode" class="formValues">{{addData.btlrNm}}</div><br>
+                <span class="formLabel">Bottler Customer ID (or) COF#</span>
+                <div [hidden]="reviewMode" class="formValues">
+                    <input id="cof" name="cof" type="text" [(ngModel)]="addData.btlrCustIdVal">
+                </div>
+                <div [hidden]="!reviewMode" class="formValues">{{reviewBtlrCustIdVal}}</div><br>
+                <span class="formLabel">Customer Name<span style="color:red"> *</span></span>
+                <div [hidden]="reviewMode" class="formValues">
+                    <input id="custName " name="custName" type="text" [(ngModel)]="addData.custNm">
+                </div>
+                <div [hidden]="!reviewMode" class="formValues">{{addData.custNm}}</div><br>
+                <span class="formLabel">Spire Unit Location<span style="color:red"> *</span></span>
+                <div [hidden]="reviewMode" class="formValues">
+                    <input id="eqpmtLoc " name="eqpmtLoc" type="text" [(ngModel)]="addData.eqpmtLocDsc">
+                </div>
+                <div [hidden]="!reviewMode" class="formValues">
+                    {{addData.eqpmtLocDsc}}
+                </div><br>
+                <span class="formLabel">Install Completion Date</span>
+                <div [hidden]="reviewMode">
+                    <jqxDateTimeInput #deploymentDate [width]='"40%"' name="installCompletionDate" [template]="'info'" [formatString]="'dd-MMM-yyyy'"
+                      [placeHolder]="'dd-MMM-yyyy'"  [allowNullDate]="'true'" [allowKeyboardDelete]="'true'" [value]=null [(ngModel)]="addData.deploymentDt"></jqxDateTimeInput>
+                </div>
+                <div [hidden]="!reviewMode" class="formValues">
+                    {{reviewDeploymentDt}}
+                </div><br>
+            </div>
+            <div class="col-md-1">
+            </div>
+
+            <div class="col-md-4">
+
+                <span class="formLabel">Customer Address Line 1</span>
+                <div [hidden]="reviewMode" class="formValues">
+                    <input id="custAddr1" name="custAddr1" type="text" [(ngModel)]="addData.custAddrTxt1">
+                </div>
+                <div [hidden]="!reviewMode" class="formValues">
+                    {{reviewCustAddrTxt1}}
+                </div><br>
+                <span class="formLabel">Customer Address Line 2</span>
+                <div [hidden]="reviewMode" class="formValues">
+                    <input id="custAddr2" name="custAddr2" type="text" [(ngModel)]="addData.custAddrTxt2">
+                </div>
+                <div [hidden]="!reviewMode" class="formValues">
+                    {{reviewCustAddrTxt2}}
+                </div><br>
+                <span class="formLabel">Customer City</span>
+                <div [hidden]="reviewMode" class="formValues">
+                    <input id="city" name="city" type="text" [(ngModel)]="addData.custCity">
+                </div>
+                <div [hidden]="!reviewMode" class="formValues">
+                    {{reviewCustCity}}
+                </div><br>
+
+                <span class="formLabel">Customer State</span>
+                <div [hidden]="reviewMode" class="formValues">
+                    <select id="state" name="state" placeholder="select state" class="commonWidth" [(ngModel)]="addData.custState" [disabled]=(disableFields)>
+<option value=undefined disabled selected>Select</option>
+<option *ngFor="let state of stateListResponse" value={{state.stateName}}>{{state.stateName}}</option>
+</select>
+                </div>
+                <div [hidden]="!reviewMode" class="formValues">
+                    {{reviewCustState}}
+                </div><br>
+
+                <span class="formLabel">Customer Zip/Postal Code</span>
+                <div [hidden]="reviewMode" class="formValues">
+                    <input id="zipcode" name="zipcode" type="text" [(ngModel)]="addData.custPostCd">
+                </div>
+                <div [hidden]="!reviewMode" class="formValues">
+                    {{reviewCustPostCd}}
+                </div><br>
+                <span class="formLabel">Go Live Date</span>
+                <div [hidden]="reviewMode">
+                    <jqxDateTimeInput #goLiveDateRef [width]='"40%"' name="goLiveDate" [template]="'info'" [(ngModel)]="addData.goLiveDt" [formatString]="'dd-MMM-yyyy'"
+                      [placeHolder]="'dd-MMM-yyyy'"  [allowNullDate]="'true'" [allowKeyboardDelete]="'true'" [value]=null></jqxDateTimeInput>
+                </div>
+                <div [hidden]="!reviewMode" class="formValues">
+                    {{reviewGoLiveDt}}
+                </div><br>
+
+            </div>
+            <div class="col-md-2">
+            </div>
+
+            <br/><br/><br/>
+            <legend class="subHeadingDiv"> Spire & NUC Details</legend>
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-4">
+
+                <span class="formLabel">Spire Unit Serial #<span style="color:red"> *</span></span>
+                <div [hidden]="reviewMode" class="formValues">
+                    <input id="spireSerial" name="spireSerial" type="text" [(ngModel)]="addData.eqpmtSrlNum">
+                </div>
+                <div [hidden]="!reviewMode" class="formValues">
+                    {{addData.eqpmtSrlNum}}
+                </div><br>
+                <span class="formLabel">Spire Unit Type<span style="color:red"> *</span></span>
+                <div [hidden]="reviewMode" class="formValues">
+                    <select id="spireType" name="spireType" placeholder="Select Type" class="commonWidth" [(ngModel)]="addData.eqpmtType" >
+<option value=undefined disabled selected>Select</option>
+   <!-- <option value="Spire 2.0">Spire 2.0</option>
+<option value="Spire 4.0">Spire 4.0</option> -->
+ <option *ngFor="let spireType of spireTypeList" value={{spireType.spireName}}>{{spireType.spireName}}</option> 
+   
+</select> </div>
+                <div [hidden]="!reviewMode" class="formValues">
+                    {{addData.eqpmtType}}
+                </div><br>
+                <span class="formLabel">Spire Unit Make</span>
+                <div [hidden]="reviewMode" class="formValues">
+                    <select id="spireMake" name="spireMake" placeholder="Select Make" class="commonWidth" [(ngModel)]="addData.eqpmtMfgr" (change)="onEquipMakeChange()">
+<option value=undefined disabled selected>Select</option>
+<option *ngFor="let manufacturer of manufacturerListResponse" value={{manufacturer.key}}>{{manufacturer.key}}</option>             
+</select></div>
+                <div [hidden]="!reviewMode" class="formValues">
+                    {{reviewEqpmtMfgr}}
+                </div><br>
+
+                <span class="formLabel">Spire Unit Model</span>
+                <div [hidden]="reviewMode" class="formValues">
+                    <select id="spireModel" name="spireModel" placeholder="Select Model" class="commonWidth" [(ngModel)]="addData.eqpmtModel"
+                       [disabled]=(disableEqpmtModel)>
+<option value=undefined disabled selected>Select</option>
+ <option *ngFor="let model of equipModelResponse" value={{model.key}}>{{model.key}}</option>
+               
+</select>
+                </div>
+                <div [hidden]="!reviewMode" class="formValues">
+                    {{reviewEqpmtModel}}
+                </div><br>
+
+                <!-- <span class="formLabel">Ident Item ID</span>
+                <div [hidden]="reviewMode" class="formValues">
+                     <input id="identItemId" name="identItemId" type="text" [(ngModel)]="addData.identItemId">
+                     
+                </div>
+                <div [hidden]="!reviewMode" class="formValues">
+                    {{addData.identItemId}}
+                </div><br> -->
+
+            </div>
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-4">
+
+                <span class="formLabel">NUC Serial #<span style="color:red"> *</span></span>
+                <div [hidden]="reviewMode" class="formValues">
+                    <input id="nucSerial" name="nucSerial" type="text" [(ngModel)]="addData.nucSerialNum">
+                </div>
+                <div [hidden]="!reviewMode" class="formValues">
+                    {{addData.nucSerialNum}}
+                </div><br>
+                <span class="formLabel">NUC Make</span>
+                <div [hidden]="reviewMode" class="formValues">
+                    <select id="nucMake" name="nucMake" placeholder="Select Make" class="commonWidth" [(ngModel)]="addData.nucMake" (change)="onNUCMakeChange()">
+<option value=undefined disabled selected>Select</option>
+<option *ngFor="let manufacturer of nucManufacturerListResponse" value={{manufacturer.key}}>{{manufacturer.key}}</option>             
+</select></div>
+                <div [hidden]="!reviewMode" class="formValues">
+                    {{reviewNucMake}}
+                </div><br>
+                <span class="formLabel">NUC Model</span>
+                <div [hidden]="reviewMode" class="formValues">
+                    <select id="nucModel" name="nucModel" placeholder="Select Model" class="commonWidth" [(ngModel)]="addData.nucModel" (change)="onSpireModelChange()"
+                        [disabled]=(disableNUCModel)>
+<option value=undefined disabled selected>Select</option>
+ <option *ngFor="let nucModel of nucModelResponse"
+             value={{nucModel.key}}>{{nucModel.key}}</option>
+        
+</select></div>
+                <div [hidden]="!reviewMode" class="formValues">
+                    {{reviewNucModel}}
+                </div><br>
+                <span class="formLabel">Third Party Equipment ID <br/>(or) Asset#</span>
+                <div [hidden]="reviewMode" class="formValues">
+                    <input id="eqpmtAsset" name="eqpmtAsset" type="text" [(ngModel)]="addData.thirdPartyEqpmtId">
+                </div>
+                <div [hidden]="!reviewMode" class="formValues">
+                    {{reviewThirdPartyEqpmtId}}
+                </div><br>
+            </div>
+            <div class="col-md-2">
+
+            </div>
+
+            <br/><br/><br/>
+            <legend class="subHeadingDiv"> Modem Details</legend>
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-4">
+                <span class="formLabel">Modem Serial #<span style="color:red"> *</span></span>
+                <div [hidden]="reviewMode" class="formValues">
+                    <input id="modemSerial" name="modemSerial" type="text" [(ngModel)]="addData.modemSerialNum">
+                </div>
+                <div [hidden]="!reviewMode" class="formValues">{{addData.modemSerialNum}}</div><br>
+                <span class="formLabel">Modem Carrier</span>
+                <div [hidden]="reviewMode" class="formValues">
+                    <select id="modemCarrier" name="modemCarrier" placeholder="Select Carrier" class="commonWidth" [(ngModel)]="addData.modemCarrier"
+                        (change)="onSpireMakeChange()">
+<option value=undefined disabled selected>Select</option>
+<option *ngFor="let modemCarrier of modemCarrierResponse" value={{modemCarrier.key}}>{{modemCarrier.key}}</option>
+</select></div>
+
+                <div [hidden]="!reviewMode" class="formValues">{{reviewModemCarrier}}</div><br>
+            </div>
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-4">
+             <span class="formLabel">Modem Make</span>
+                <div [hidden]="reviewMode" class="formValues">
+                    <select id="modemMake" name="modemMake" placeholder="Select Make" class="commonWidth" [(ngModel)]="addData.modemMake" (change)="onModemMakeChange()">
+<option value=undefined disabled selected>Select</option>
+<option *ngFor="let manufacturer of modemManufacturerListResponse" value={{manufacturer.key}}>{{manufacturer.key}}</option>             
+</select></div>
+
+                <div [hidden]="!reviewMode" class="formValues">{{reviewModemMake}}</div><br>
+
+                 <span class="formLabel">Modem Model</span>
+                <div [hidden]="reviewMode" class="formValues">
+                    <select id="modemModel" name="modemModel" placeholder="Select Model" class="commonWidth" [(ngModel)]="addData.modemModel"
+                        (change)="onSpireModelChange()" [disabled]=(disableModemModel)>
+<option value=undefined disabled selected>Select</option>
+ <option *ngFor="let modemModel of modemModelResponse"
+             value={{modemModel.key}}>{{modemModel.key}}</option>
+        
+</select></div>
+
+                <div [hidden]="!reviewMode" class="formValues">{{reviewModemModel}}</div><br>
+            </div>
+            <div class="col-md-2">
+
+            </div>
+
+
+        </div>
+
+        <div class="row ">
+            <div class="col-md-4 "></div>
+            <div class="col-md-7 " style="text-align: center; ">
+
+                <div [hidden]="reviewMode">
+                    <div class="row ">
+                        <div class="col-md-6 ">
+                        </div>
+                        <div class="col-md-2 ">
+                            <jqxButton #backToSearchBtn [theme]='"customBlue"' [width]='100' [height]='25' (click)="backToSearchForm()">
+                                Cancel</jqxButton>
+                        </div>
+                        <div class="col-md-2 ">
+                            <!-- btn btn-2 btn-2g  -->
+                            <!-- <button id="reviewBtn" type="submit" name="singlebutton" 
+                    class="btn-form btn-primary pull-right" (click)="reviewForm()">Review</button> -->
+                            <jqxButton #reviewBtn [theme]='energyblue' [width]='100' [height]='25' (click)="reviewForm()">
+                                Review</jqxButton>
+                        </div>
+                            <div class="col-md-2 ">
+                        </div>
+                    </div>
+
+                    <!-- <button id="backToSearchBtn" type="button" name="singlebutton" class="btn-form btn-primary" 
+                    (click)="backToSearchForm()">Cancel</button> -->
+                </div>
+                <div [hidden]="!reviewMode">
+                    <!-- <button id="sumbitBtn" type="submit" name="singlebutton" class="btn-form btn-primary pull-right"
+                         (click)="submitForm()">Submit Form</button>
+                    <button id="backBtn" type="button" name="singlebutton" class="btn-form btn-primary pull-right" 
+                    (click)="backToEditForm()">Edit Form</button>
+                    <button id="cancelBtn" type="reset" name="singlebutton" class="btn-form btn-primary pull-right" 
+                    (click)="cancelForm()">Cancel</button> -->
+                <div class="row ">
+                    <div class="col-md-4">
+                        </div>
+                        <div class="col-md-2">
+                             <jqxButton #cancelBtn [theme]='"customBlue"' [width]='100' [height]='25' (click)="cancelForm()">
+                                Cancel</jqxButton>
+                        </div>
+                        <div class="col-md-2">
+                            <jqxButton #backBtn [theme]='"customBlue"' [width]='100' [height]='25' (click)="backToEditForm()">
+                                Edit Form</jqxButton>
+                        </div>
+                        <div class="col-md-2">
+                            <jqxButton #sumbitBtn [theme]='"energyblue"' [width]='110' [height]='25' (click)="submitForm()">
+                                Submit Form</jqxButton>
+                        </div>
+                            <div class="col-md-2 ">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- <div class="col-md-4 "></div> -->
+        </div>
+ </div>
+    </div>
+</form>

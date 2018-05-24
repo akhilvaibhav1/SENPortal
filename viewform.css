@@ -1,0 +1,154 @@
+.row {
+    padding: 10px;
+}
+
+.col-md-6 {
+    padding: 5px;
+}
+
+.form-horizontal{
+    color: black;
+}
+
+legend{
+    color: black;
+    float: left; 
+    margin-left: 10px;
+    font-family: Arial; 
+    font-weight: 400;
+    font-size: 13px;
+    
+}
+
+.formLabel{
+     color: black;
+    font-family: Arial;
+    font-size: 12px;
+    width: 200px;
+     float: left; 
+}
+
+.formValues{
+     color: black;
+    font-family: 'Arial-BoldMT', 'Arial Bold', 'Arial';
+    font-size: 12px;
+    width: 150px;
+    height : 40px;
+     float: left; 
+}
+
+.commonWidth{
+    width: 150px;
+}
+
+.headingDiv{
+    float: left;
+    /* height: 30px; */
+    width: 100%;
+    color: black;
+    padding-left: 1%;
+    /* border: 1px solid floralwhite; */
+    /* background-color:#EFEFEF; padding-top: 1%;
+     padding-bottom: 2%; */
+    /* padding-right: 3%; */
+    /* padding-left: 1%;  */
+     font-family: Arial; 
+    font-weight: bold;
+    font-size: 18px;
+    padding-bottom: 25px;
+}
+
+.successMsg{
+    float: left;
+    height: 30px;
+    width: 80%;
+    color: black;
+    font-family: Arial;
+    font-size: 12px;
+    border: 1px solid floralwhite;
+    background-color: #00FF97; padding-top: 1%;
+    padding-bottom: 2%;
+    padding-right: 3%;
+    padding-left: 2%;
+}
+.subHeadingDiv{
+    float: left;
+    height: 30px;
+    width: 95%;
+    color: black;
+    /* border: 1px solid floralwhite; */
+    background-color:#EFEFEF; padding-top: 1%;
+     padding-bottom: 2%;
+    /* padding-right: 3%; */
+    padding-left: 1%; 
+     font-family: Arial; 
+    font-weight: 400;
+    font-size: 13px;
+
+}
+.errorMsg{
+    float: left;
+    height: 30px;
+    width: 65%;
+    color: black;
+      font-family: Arial;
+    font-size: 12px;
+    border: 1px solid red;
+    background-color: palevioletred; padding-top: 1%;
+    padding-bottom: 2%;
+    padding-right: 3%;
+    padding-left: 2%;
+}
+
+
+.deleteFormTitle{
+    color:black;
+    font-family: 'ArialMT', 'Arial' !important;
+    font-weight: bold !important;
+    font-style: normal;
+    font-size: 16px !important; 
+    text-align:center; 
+    display: inline-block;
+    /* background-color: grey; */
+    width: 100%;
+}
+
+.deleteFormContent{
+    color:black;
+    font-family: 'ArialMT', 'Arial' !important;
+    font-weight: 400 !important;
+    font-style: normal;
+    font-size: 15px !important; 
+    text-align:left; 
+    display: inline-block;
+    width: 100%;
+}
+
+.deleteFormBtn{
+    
+    border:1px solid #999999; 
+    border-radius: 5px;
+    font-size:14px;
+    font-family:'ArialMT', 'Arial' !important;
+    padding: 5px 15px 5px 15px; 
+    text-decoration:none;
+    display:inline-block;
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.3); 
+    color: #000000;
+    background-color: #FFFFFF;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#CFCFCF));
+    background-image: -webkit-linear-gradient(top, #FFFFFF, #CFCFCF);
+    background-image: -moz-linear-gradient(top, #FFFFFF, #CFCFCF);
+    background-image: -ms-linear-gradient(top, #FFFFFF, #CFCFCF);
+    background-image: -o-linear-gradient(top, #FFFFFF, #CFCFCF);
+    background-image: linear-gradient(to bottom, #FFFFFF, #CFCFCF);
+    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#FFFFFF, endColorstr=#CFCFCF);
+
+}
+
+.blueBtn{
+    background-color: blue !important;
+    background-image: none !important;
+    color: #fff !important;
+}
+ 

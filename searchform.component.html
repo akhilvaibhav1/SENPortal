@@ -1,0 +1,350 @@
+<div class="col-md-12 nopadding" *blockUI="'searchFormPage'"> 
+        <div style="padding-top: 3%;
+    padding-right: 2%;
+    padding-left: 4%;" [hidden]='!hideSearch'>
+    <form name="searchForm" onload="reset();">
+        <div class="row">
+            <div class="col-md-10">
+                <span class="headingDiv">Forms : Search</span>
+                <br/>
+                <br/>
+                <!-- <div [hidden]='!added' style="float:left; width:50%;color:blue;font-weight:bold;border:1px black"> -->
+                <div class="successMsg" [hidden]='!reconComponent.added'>
+                    <img src="app/images/success.png" />
+                    <span> New form has been added successfully!
+                        <a>Reconcile Now</a>
+                    </span>
+                    <br/>
+                    <br/>
+                </div>
+                <div class="errorMsg" [hidden]='!reconComponent.addError'>
+                    <img src="app/images/error.png" />
+                    <span>Error : The Add form action failed. Please try again later or contact the administrator.</span>
+                    <br/>
+                    <br/>
+                </div>
+                <div class="errorMsg" [hidden]='!searchError'>
+                    <img src="app/images/error.png" />
+                    <span>Error : The Search action failed. Please try again later or contact the administrator.</span>
+                    <br/>
+                    <br/>
+                </div>
+
+                <!-- <div [hidden]='!deleted' style="float:left; width:50%;color:blue;font-weight:bold;border:1px black"> -->
+                <div class="successMsg" [hidden]='!deleted'>
+                    <img src="app/images/success.png" />
+                    <span> The form for the equipment serial # {{deletedEqpmtSrlNum}} has been deleted.</span>
+                    <br/>
+                    <br/>
+                </div>
+            </div>
+
+
+            <div class="col-md-2" style="float:right;">
+                <!-- <button id="addBtn" type="button" class="btn-form btn-primary pull-right" (click)="toggleView()">Add New Form</button> -->
+                <jqxButton #addBtn [theme]='"energyblue"' [width]='130' [height]='25' (onClick)="toggleView()">
+                    Add New Form
+                </jqxButton>
+
+                <!-- <jqxButton #searchButton [theme]='"energyblue"' [width]='90' [height]='25'>
+            Search
+    </jqxButton> -->
+
+            </div>
+
+        </div>
+        <legend class="subHeadingDiv">General Information</legend>
+        <div class="row">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-4">
+               
+                <span class="formLabel">Country</span>
+                <div class="formValues">
+                    <select id="country" name="country" class="commonWidth" [(ngModel)]="searchData.country" (change)="onCountryChange()">
+                        <option value=undefined disabled selected>Select</option>
+                         <option *ngFor="let ctry of countryListResponse | slice:1" value={{ctry.countryValue}}>{{ctry.countryName}}</option> 
+
+                    </select>
+                </div>
+                <br>
+                <span class="formLabel">Bottling Partner</span>
+                <div class="formValues">
+                    <select id="bottler" name="bottler" placeholder="Select Bottler" [(ngModel)]="searchData.btlrNm" [disabled]=(disableFields)
+                        class="commonWidth">
+                        <option value=undefined disabled selected>Select</option>
+                        <option *ngFor="let bottlerList of bottlerListResponse | slice:1" value={{bottlerList.bottlingPartnerName}}>{{bottlerList.bottlingPartnerName}}</option>
+
+                    </select>
+                </div>
+                <br>
+                <span class="formLabel">Bottler Customer ID (or) COF#</span>
+                <div class="formValues">
+                    <input id="cof" name="cof" type="text" [(ngModel)]="searchData.btlrCustIdVal">
+                </div>
+                <br>
+                <span class="formLabel">Customer Name</span>
+                <div class="formValues">
+                    <input id="custName " name="custName" type="text" [(ngModel)]="searchData.custNm">
+                </div>
+                <br>
+                <span class="formLabel">Spire Unit Location</span>
+                <div class="formValues">
+                    <input id="eqpmtLoc " name="eqpmtLoc" type="text" [(ngModel)]="searchData.eqpmtLocDsc">
+                </div>
+                <br>
+                <span class="formLabel">Install Completion Date</span>
+                <div>
+                    <jqxDateTimeInput #deploymentDate [width]='"40%"' name="installCompletionDate"
+                    [placeHolder]="'dd-MMM-yyyy'" [(ngModel)]="searchData.deploymentDt" [template]="'info'"
+                        [allowNullDate]="'true'" [allowKeyboardDelete]="'true'" [formatString]="'dd-MMM-yyyy'" [value]=null></jqxDateTimeInput>
+                </div>
+                <br>
+            </div>
+            <div class="col-md-1">
+            </div>
+
+            <div class="col-md-4">
+
+                <span class="formLabel">Customer Address Line 1</span>
+                <div class="formValues">
+                    <input id="custAddr1" name="custAddr1" type="text" [(ngModel)]="searchData.custAddrTxt1">
+                </div>
+                <br>
+                <span class="formLabel">Customer Address Line 2</span>
+                <div class="formValues">
+                    <input id="custAddr2" name="custAddr2" type="text" [(ngModel)]="searchData.custAddrTxt2">
+                </div>
+                <br>
+                <span class="formLabel">Customer City</span>
+                <div class="formValues">
+                    <input id="city" name="city" type="text" [(ngModel)]="searchData.custCity">
+                </div>
+                <br>
+
+                <span class="formLabel">Customer State</span>
+                <div class="formValues">
+                    <select id="state" name="state" placeholder="select state" [(ngModel)]="searchData.custState" class="commonWidth" [disabled]=(disableFields)>
+                        <option value=undefined disabled selected>Select</option>
+                        <option *ngFor="let state of stateListResponse" value={{state.stateName}}>{{state.stateName}}</option>
+                    </select>
+                </div>
+                <br>
+
+                <span class="formLabel">Customer Zip/Postal Code</span>
+                <div class="formValues">
+                    <input id="zipcode" name="zipcode" type="text" [(ngModel)]="searchData.custPostCd">
+                </div>
+                <br>
+                <span class="formLabel">Go Live Date</span>
+                <div>
+                    <jqxDateTimeInput #goLiveDateRef [width]='"40%"' name="goLiveDate" [template]="'info'" [(ngModel)]="searchData.goLiveDt"
+                       [placeHolder]="'dd-MMM-yyyy'" [formatString]="'dd-MMM-yyyy'" [allowNullDate]="'true'" [allowKeyboardDelete]="'true'" [value]=null></jqxDateTimeInput>
+                </div>
+                <br>
+
+            </div>
+            <div class="col-md-2">
+            </div>
+
+            <br/>
+            <br/>
+            <br/>
+            <legend class="subHeadingDiv"> Spire & NUC Details</legend>
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-4">
+
+                <span class="formLabel">Spire Unit Serial #</span>
+                <div class="formValues">
+                    <input id="spireSerial" name="spireSerial" type="text" [(ngModel)]="searchData.eqpmtSrlNum">
+                </div>
+                <br>
+                <span class="formLabel">Spire Unit Type</span>
+                <div class="formValues">
+                    <select id="spireType" name="spireType" placeholder="Select Type" class="commonWidth" [(ngModel)]="searchData.eqpmtType"
+                        (change)="onSpireMakeChange()">
+                        <option value=undefined disabled selected>Select</option>
+                        <option *ngFor="let spireType of spireTypeList" value={{spireType.spireName}}>{{spireType.spireName}}</option>
+
+                    </select>
+                </div>
+                <br>
+                <span class="formLabel">Spire Unit Make</span>
+                <div class="formValues">
+                    <select id="spireMake" name="spireMake" placeholder="Select Make" class="commonWidth" [(ngModel)]="searchData.eqpmtMfgr"
+                        (change)="onEquipMakeChange()">
+                       <option value=undefined disabled selected>Select</option>
+                        <option *ngFor="let manufacturer of manufacturerListResponse" value={{manufacturer.key}}>{{manufacturer.key}}</option>
+                    </select>
+                </div>
+                <br>
+
+                <span class="formLabel">Spire Unit Model</span>
+                <div class="formValues">
+                    <select id="spireModel" name="spireModel" placeholder="Select Model" class="commonWidth" [(ngModel)]="searchData.eqpmtModel"
+                        [disabled]=(disableEqpmtModel)>
+                        <option value=undefined disabled selected>Select</option>
+                        <option *ngFor="let model of equipModelResponse" value={{model.key}}>{{model.key}}</option>
+                    </select>
+                </div>
+                <br>
+
+                <span class="formLabel">Ident Item ID</span>
+                <div class="formValues">
+
+                    <input id="identItemId" name="identItemId" type="text" [(ngModel)]="searchData.identItemId">
+                </div>
+                <br>
+
+            </div>
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-4">
+
+                <span class="formLabel">NUC Serial #</span>
+                <div class="formValues">
+                    <input id="nucSerial" name="nucSerial" type="text" [(ngModel)]="searchData.nucSerialNum">
+                </div>
+                <br>
+                <span class="formLabel">NUC Make</span>
+                <div class="formValues">
+                    <select id="nucMake" name="nucMake" placeholder="Select Make" class="commonWidth" [(ngModel)]="searchData.nucMake" (change)="onNUCMakeChange()">
+                        <option value="11">Select</option>
+                        <option value="12">EEEE</option>
+                        <option value="13">IIIII</option>
+                        <!-- <option *ngFor="let manufacturer of nucManufacturerListResponse" value={{manufacturer.key}}>{{manufacturer.key}}</option> -->
+                    </select>
+                </div>
+                <br>
+                <span class="formLabel">NUC Model</span>
+                <div class="formValues">
+                    <select id="nucModel" name="nucModel" placeholder="Select Model" class="commonWidth" [(ngModel)]="searchData.nucModel" (change)="onSpireModelChange()"
+                        [disabled]=(disableNUCModel)>
+                        <option value=undefined disabled selected>Select</option>
+                        <option *ngFor="let nucModel of nucModelResponse" value={{nucModel.key}}>{{nucModel.key}}</option>
+
+                    </select>
+                </div>
+                <br>
+                <span class="formLabel">Third Party Equipment ID
+                    <br/>(or) Asset#</span>
+                <div class="formValues">
+                    <input id="eqpmtAsset" name="eqpmtAsset" type="text" [(ngModel)]="searchData.thirdPartyEqpmtId">
+                </div>
+                <br>
+
+            </div>
+            <div class="col-md-2">
+
+            </div>
+
+            <br/>
+            <br/>
+            <br/>
+            <legend class="subHeadingDiv"> Modem Details</legend>
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-4">
+                <span class="formLabel">Modem Serial #</span>
+                <div class="formValues">
+                    <input id="modemSerial" name="modemSerial" type="text" [(ngModel)]="searchData.modemSerialNum">
+                </div>
+                <br>
+                <span class="formLabel">Modem Carrier</span>
+                <div class="formValues">
+                    <select id="modemCarrier" name="modemCarrier" placeholder="Select Carrier" class="commonWidth" [(ngModel)]="searchData.modemCarrier">
+                        <option value=undefined disabled selected>Select</option>
+                        <option *ngFor="let modemCarrier of modemCarrierResponse" value={{modemCarrier.key}}>{{modemCarrier.key}}</option>
+                    </select>
+                </div>
+
+                <br>
+            </div>
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-4">
+
+                <span class="formLabel">Modem Make</span>
+                <div class="formValues">
+                    <select id="modemMake" name="modemMake" placeholder="Select Make" class="commonWidth" [(ngModel)]="searchData.modemMake"
+                        (change)="onModemMakeChange()">
+                        <option value=undefined disabled selected>Select</option>
+                        <option *ngFor="let manufacturer of modemManufacturerListResponse" value={{manufacturer.key}}>{{manufacturer.key}}</option>
+                    </select>
+                </div>
+
+                <span class="formLabel">Modem Model</span>
+                <div class="formValues">
+                    <select id="modemModel" name="modemModel" placeholder="Select Model" class="commonWidth" [(ngModel)]="searchData.modemModel"
+                        (change)="onSpireModelChange()" [disabled]=(disableModemModel)>
+                        <option value=undefined disabled selected>Select</option>
+                        <option *ngFor="let modemModel of modemModelResponse" value={{modemModel.key}}>{{modemModel.key}}</option>
+
+                    </select>
+                </div>
+                <br>
+            </div>
+            <div class="col-md-2">
+
+            </div>
+            <div class="row ">
+                <div class="col-md-4 "></div>
+                <div class="col-md-4 " style="text-align: center; ">
+                    <div class="row ">
+                        <div class="col-md-6 ">
+                            <!-- <button id="searchBtn" type="submit" name="singlebutton" class="btn btn-2 btn-2g " (click)="searchForm();">Search</button> -->
+                            <!-- <button id="searchBtn" type="button" class="btn-form btn-primary" (click)="searchForm();">Search</button> -->
+                            <jqxButton class="searchcolorblue" #searchButton style="background-color: blue;" [theme]='"energyblue"' [width]='90' [height]='25' (onClick)="searchForm()">
+                                Search
+                            </jqxButton>
+                            <!-- <jqxButton #clearSearch [theme]='"energyblue"' [width]='90' [height]='25' (onClick)="onResetClick()">
+            Clear
+    </jqxButton> -->
+                        </div>
+                        <div class="col-md-6 ">
+                            <!-- <div *ngIf="formSearchResultTable"> -->
+                                <!-- <button id="clearBtn" type="reset" name="singlebutton" class="btn-form btn-warning" (click)="onResetClick();">Clear</button> -->
+                                <jqxButton #clearSearch [theme]='"customBlue"' [width]='90' [height]='25' (onClick)="onResetClick()">
+                                    Clear
+                                </jqxButton>
+                            <!-- </div> -->
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-4 "></div>
+            </div>
+
+
+        </div>
+    </form>
+
+    <div *ngIf="formSearchResultTable">
+        <legend>Search Results</legend>
+        <div class="col-md-12" style="text-align: center;padding: 5px;">
+            <jqxGrid #formSearchGridRef [width]='"100%"' [height]='"250px"' [theme]='"energyblue"' [source]='formSearchResultTable' [columns]='formSearchResultColumns'
+                [enabletooltips]='true' [editable]='false' [pageable]='true' [pagesize]='10' [enablehover]='true' [enabletooltips]='true'
+                [filterable]='true' [autorowheight]="true" [autoheight]="true" [columnsheight]='"60px"' [columnsautoresize]="true"
+                [rendered]='rendered' [rowdetails]="true" [initrowdetails]="initrowdetails" [rowdetailstemplate]="rowdetailstemplate"
+                [showfiltercolumnbackground]='false'>
+            </jqxGrid>
+            <br/>
+
+        </div>
+    </div>
+ 
+    <!-- <div *ngIf="showLoading" style="color: black; text-align: center">
+        <p>Error while searching. Please try again later.</p>
+    </div>  -->
+
+
+
+</div>
+</div>
+<div style="padding-top: 3%;
+    padding-right: 2%;
+    padding-left: 4%;" [hidden]='hideSearch'>
+    <viewEditForm></viewEditForm>
+
+</div>

@@ -1,0 +1,452 @@
+<div class="col-md-12 nopadding" *blockUI="'viewFormBlock'">
+    <div style="padding-top: 0%;
+    padding-right: 2%;
+    padding-left: 4%;" (click)="onCountryChange()">
+       <form name="viewForm"  onload="reset();">  
+              <div class="col-md-10">
+                  <div [hidden]="!viewMode">
+                      <span class="headingDiv">
+                            Forms : View Form - Equipment Serial # {{viewOnlyData.reviewEqpmtSrlNum}} 
+                        </span>
+                    </div>
+                    <div [hidden]="viewMode" >
+                        <span class="headingDiv">
+                           Forms : Edit Form - Equipment Serial # {{viewOnlyData.reviewEqpmtSrlNum}} </span>
+                         <span style="float:right">Fields marked with an asterisk (
+                        <span style="color:red">*</span>) are required </span>
+
+                    </div>
+                  <!-- <div [hidden]='!updated' style="float:left; width:50%;color:blue;font-weight:bold;border:1px black"> -->
+                  <!-- <div [hidden]='!updated' style="float:left; width:50%;color:black;border:1px white;bgcolor:green;"> -->
+                    <div class="successMsg" [hidden]='!updated'>
+                         <img src="app/images/success.png" />
+                         <span> Changes to the form for equipment serial # {{viewOnlyData.reviewEqpmtSrlNum}} has been saved successfully!</span>
+                         <br/>
+                        <br/>
+                   </div>
+                   <div class="errorMsg" [hidden]='!updateError'>
+                       <img src="app/images/error.png" />
+                       <span> Error : The Edit form action failed. Please try again later or contact the administrator.</span>
+                     <br/>
+                     <br/>
+                   </div>
+
+                  <div class="errorMsg" [hidden]='!deleteError'>
+                     <img src="app/images/error.png" />
+                      <span> Error : The Delete form action failed. Please try again later or contact the administrator.</span>
+                      <br/>
+                      <br/>
+                       <br/>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                 </div>
+          
+            <!-- <hr style=" display: block;border-width: 0.5px; border-color: black;margin-top: 80px"> -->
+            <legend class="subHeadingDiv" >General Information</legend>
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-4">
+                    <span class="formLabel">
+                        Bottling Partner<span [hidden]="viewMode" style="color:red"> *</span></span>
+                  
+                    <div [hidden]="viewMode" class="formValues">
+                        <select id="bottler" name="bottler" placeholder="Select Bottler" class="commonWidth" [(ngModel)]="editData.btlrNm" [disabled]=(disableFields)>
+                            <option value=undefined disabled selected>Select</option>
+                            <option *ngFor="let bottlerList of bottlerListResponse | slice:1" value={{bottlerList.bottlingPartnerName}}>{{bottlerList.bottlingPartnerName}}</option>
+                        </select>
+                    </div>
+                    <div [hidden]="!viewMode" class="formValues">
+                        <label class="thick">{{viewOnlyData.reviewBtlrNm}}</label>
+                    </div>
+                    <br>
+                    <span class="formLabel">
+                        Country<span [hidden]="viewMode" style="color:red"> *</span></span>
+                    <div [hidden]="viewMode" class="formValues">
+                        <select id="country" name="country" placeholder="Select Country" class="commonWidth" [(ngModel)]="editData.country" (change)="onCountryChange()">
+                            <option value=undefined disabled selected>Select</option>
+                            <option *ngFor="let ctry of countryListResponse | slice:1" value={{ctry.countryName}}>{{ctry.countryName}}</option>
+
+                        </select>
+                    </div>
+                    <div [hidden]="!viewMode" class="formValues">
+                        <label class="thick">{{viewOnlyData.reviewCountry}}</label>
+                    </div>
+                    <br>
+                    <span class="formLabel">Bottler Customer ID
+                        <br/>(or) COF#</span>
+                    <div [hidden]="viewMode" class="formValues">
+                        <input id="cof" name="cof" type="text" class="commonWidth" [(ngModel)]="editData.btlrCustIdVal">
+                    </div>
+                    <div [hidden]="!viewMode" class="formValues">
+                        <label class="thick">{{viewOnlyData.reviewBtlrCustIdVal}}</label>
+                    </div>
+                    <br>
+                    <span class="formLabel">
+                        Customer Name<span [hidden]="viewMode" style="color:red"> *</span></span>
+                    <div [hidden]="viewMode" class="formValues">
+                        <input id="custName " name="custName" type="text" class="commonWidth" [(ngModel)]="editData.custNm">
+                    </div>
+                    <div [hidden]="!viewMode" class="formValues">
+                        <label class="thick">{{viewOnlyData.reviewCustNm}}</label>
+                    </div>
+                    <br>
+                    <span class="formLabel">
+                        Spire Unit Location<span [hidden]="viewMode" style="color:red"> *</span></span>
+                    <div [hidden]="viewMode" class="formValues">
+                        <input id="eqpmtLoc " name="eqpmtLoc" type="text" class="commonWidth" [(ngModel)]="editData.eqpmtLocDsc">
+                    </div>
+                    <div [hidden]="!viewMode" class="formValues">
+                        <label class="makebold">{{viewOnlyData.reviewEqpmtLocDsc}}</label>
+                    </div>
+                    <br>
+                    <span class="formLabel">Install Completion Date</span>
+                    <div [hidden]="viewMode">
+                        <jqxDateTimeInput #deploymentDate [width]='"40%"' name="installCompletionDate" [formatString]="'dd-MMM-yyyy'" [allowNullDate]="'true'"
+                          [placeHolder]="'dd-MMM-yyyy'"  [allowKeyboardDelete]="'true'" [value]=null [(ngModel)]="editData.deploymentDt"></jqxDateTimeInput>
+                    </div>
+                    <div [hidden]="!viewMode" class="formValues">
+                        <label class="makebold">{{viewOnlyData.reviewDeploymentDt}}</label>
+                    </div>
+                    <br>
+                </div>
+                <div class="col-md-1">
+                </div>
+
+                <div class="col-md-4">
+
+                    <span class="formLabel">Customer Address Line 1</span>
+                    <div [hidden]="viewMode" class="formValues">
+                        <input id="custAddr1" name="custAddr1" type="text" class="commonWidth" [(ngModel)]="editData.custAddrTxt1">
+                    </div>
+                    <div [hidden]="!viewMode" class="formValues">
+                        <label class="makebold">{{viewOnlyData.reviewCustAddrTxt1}}</label>
+                    </div>
+                    <br>
+                    <span class="formLabel">Customer Address Line 2</span>
+                    <div [hidden]="viewMode" class="formValues">
+                        <input id="custAddr2" name="custAddr2" type="text" class="commonWidth" [(ngModel)]="editData.custAddrTxt2">
+                    </div>
+                    <div [hidden]="!viewMode" class="formValues">
+                        <label class="makebold">{{viewOnlyData.reviewCustAddrTxt2}}</label>
+                    </div>
+                    <br>
+                    <span class="formLabel">Customer City</span>
+                    <div [hidden]="viewMode" class="formValues">
+                        <input id="city" name="city" type="text" class="commonWidth" [(ngModel)]="editData.custCity">
+                    </div>
+                    <div [hidden]="!viewMode" class="formValues">
+                        <label class="makebold">{{viewOnlyData.reviewCustCity}}</label>
+                    </div>
+                    <br>
+
+                    <span class="formLabel">Customer State</span>
+                    <div [hidden]="viewMode" class="formValues">
+                        <select id="state" name="state" placeholder="select state" class="commonWidth" [(ngModel)]="editData.custState" [disabled]=(disableFields)>
+                            <option value=undefined disabled selected>Select</option>
+                            <option *ngFor="let state of stateListResponse" value={{state.stateName}}>{{state.stateName}}</option>
+                        </select>
+                    </div>
+                    <div [hidden]="!viewMode" class="formValues">
+                        <label class="makebold">{{viewOnlyData.reviewCustState}}</label>
+                    </div>
+                    <br>
+
+                    <span class="formLabel">Customer Zip/Postal Code</span>
+                    <div [hidden]="viewMode" class="formValues">
+                        <input id="zipcode" name="zipcode" type="text" class="commonWidth" [(ngModel)]="editData.custPostCd">
+                    </div>
+                    <div [hidden]="!viewMode" class="formValues">
+                        <label class="makebold">{{viewOnlyData.reviewCustPostCd}}</label>
+                    </div>
+                    <br>
+                    <span class="formLabel">Go Live Date</span>
+                    <div [hidden]="viewMode">
+                        <jqxDateTimeInput #goLiveDateRef [width]='"40%"' name="goLiveDate" [(ngModel)]="editData.goLiveDt" [formatString]="'dd-MMM-yyyy'"
+                           [placeHolder]="'dd-MMM-yyyy'" [allowNullDate]="'true'" [allowKeyboardDelete]="'true'" [value]=null></jqxDateTimeInput>
+                    </div>
+                    <div [hidden]="!viewMode" class="formValues">
+                        <label class="makebold">{{viewOnlyData.reviewGoLiveDt}}</label>
+                    </div>
+                    <br>
+                 <div class="col-md-12">&nbsp;</div>
+                </div>
+                <div class="col-md-2">
+                </div>
+                <br/>
+                <br/>
+                <br/>
+                <legend class="subHeadingDiv"> Spire & NUC Details</legend>
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-4">
+                    <span class="formLabel">
+                        Spire Unit Serial #<span [hidden]="viewMode" style="color:red"> *</span></span>
+                    <div [hidden]="viewMode" class="formValues">
+                        <input id="spireSerial" name="spireSerial" type="text" class="commonWidth" [(ngModel)]="editData.eqpmtSrlNum" [disabled]="reconCompleted">
+                    </div>
+                    <div [hidden]="!viewMode" class="formValues">
+                        <label class="makebold">{{viewOnlyData.reviewEqpmtSrlNum}}</label>
+                    </div>
+                    <br>
+                    <span class="formLabel">
+                        Spire Unit Type<span [hidden]="viewMode" style="color:red"> *</span></span>
+                    <div [hidden]="viewMode" class="formValues">
+                        <select id="spireType" name="spireType" placeholder="Select Type" class="commonWidth" [(ngModel)]="editData.eqpmtType">
+                            <option value=undefined disabled selected>Select</option>
+                            <option *ngFor="let spireType of spireTypeList" value={{spireType.spireName}}>{{spireType.spireName}}</option>
+                        </select>
+                    </div>
+                    <div [hidden]="!viewMode" class="formValues">
+                        <label class="makebold">{{viewOnlyData.reviewEqpmtType}}</label>
+                    </div>
+                    <br>
+                    <span class="formLabel">Spire Unit Make</span>
+                    <div [hidden]="viewMode" class="formValues">
+                        <select id="spireMake" name="spireMake" placeholder="Select Make" class="commonWidth" [(ngModel)]="editData.eqpmtMfgr" (change)="onEquipMakeChange()">
+                            <option value=undefined disabled selected>Select</option>
+                            <option *ngFor="let manufacturer of manufacturerListResponse" value={{manufacturer.key}}>{{manufacturer.key}}</option>
+                        </select>
+                    </div>
+                    <div [hidden]="!viewMode" class="formValues">
+                        <label class="makebold">{{viewOnlyData.reviewEqpmtMfgr}}</label>
+                    </div>
+                    <br>
+
+                    <span class="formLabel">Spire Unit Model</span>
+                    <div [hidden]="viewMode" class="formValues">
+                        <select id="spireModel" name="spireModel" placeholder="Select Model" class="commonWidth" [(ngModel)]="editData.eqpmtModel"
+                            [disabled]=(disableNUCModel)>
+                            <option value=undefined disabled selected>Select</option>
+                            <option *ngFor="let model of equipModelResponse" value={{model.key}}>{{model.key}}</option>
+                        </select>
+                    </div>
+                    <div [hidden]="!viewMode" class="formValues">
+                        <label class="makebold">{{viewOnlyData.reviewEqpmtModel}}</label>
+                    </div>
+                    <br>
+
+                    <span class="formLabel">Ident Item ID</span>
+                    <div [hidden]="viewMode" class="formValues">
+
+                        <input id="identItemId" name="identItemId" type="text" [disabled]="!reconCompleted" [(ngModel)]="editData.identItemId">
+                    </div>
+                    <div [hidden]="!viewMode" class="formValues">
+                        <label class="makebold">{{viewOnlyData.reviewIdentItemId}}</label>
+                    </div>
+                    <br>
+
+                    <span class="formLabel">Third Party Equipment ID
+                        <br/>(or) Asset#</span>
+                    <div [hidden]="viewMode" class="formValues">
+                        <input id="eqpmtAsset" name="eqpmtAsset" type="text" class="commonWidth" [(ngModel)]="editData.thirdPartyEqpmtId">
+                    </div>
+                    <div [hidden]="!viewMode" class="formValues">
+                        <label class="makebold">{{viewOnlyData.reviewThirdPartyEqpmtId}}</label>
+                    </div>
+                    <br>
+             </div>
+                   <div class="col-md-1">
+                </div>
+                <div class="col-md-4">
+
+                    <span class="formLabel">
+                        NUC Serial #<span [hidden]="viewMode" style="color:red"> *</span></span>
+                    <div [hidden]="viewMode" class="formValues">
+                        <input id="nucSerial" name="nucSerial" type="text" class="commonWidth" [(ngModel)]="editData.nucSerialNum" [disabled]="reconCompleted">
+                    </div>
+                    <div [hidden]="!viewMode" class="formValues">
+                        <label class="makebold">{{viewOnlyData.reviewNucSerialNum}}</label>
+                    </div>
+                    <br>
+                    <span class="formLabel">NUC Make</span>
+                    <div [hidden]="viewMode" class="formValues">
+                        <select id="nucMake" name="nucMake" placeholder="Select Make" class="commonWidth" [(ngModel)]="editData.nucMake" (change)="onNUCMakeChange()">
+                            <option value=undefined disabled selected>Select</option>
+                            <option *ngFor="let manufacturer of nucManufacturerListResponse" value={{manufacturer.key}}>{{manufacturer.key}}</option>
+                        </select>
+                    </div>
+                    <div [hidden]="!viewMode" class="formValues">
+                        <label class="makebold">{{viewOnlyData.reviewNucMake}}</label>
+                    </div>
+                    <br>
+                    <span class="formLabel">NUC Model</span>
+                    <div [hidden]="viewMode" class="formValues">
+                        <select id="nucModel" name="nucModel" placeholder="Select Model" class="commonWidth" [(ngModel)]="editData.nucModel" (change)="onSpireModelChange()"
+                            [disabled]=(disableNUCModel)>
+                            <option value=undefined disabled selected>Select</option>
+                            <option *ngFor="let nucModel of nucModelResponse" value={{nucModel.key}}>{{nucModel.key}}</option>
+
+                        </select>
+                    </div>
+                    <div [hidden]="!viewMode" class="formValues">
+                        <label class="makebold">{{viewOnlyData.reviewNucModel}}</label>
+                    </div>
+                    <br>
+
+                 </div>
+                 <div class="col-md-2">
+
+                 </div>
+                 <div class="col-md-12" >
+                     &nbsp;
+                 </div>
+
+                 <br/>
+                 <br/>
+                 <br/>
+                   <legend class="subHeadingDiv"> Modem Details</legend>
+                   <div class="col-md-1">
+                   </div>
+                    <div class="col-md-4">
+                       <span class="formLabel">
+                        Modem Serial #<span [hidden]="viewMode" style="color:red"> *</span></span>
+                        <div [hidden]="viewMode" class="formValues">
+                           <input id="modemSerial" name="modemSerial" type="text" class="commonWidth" [(ngModel)]="editData.modemSerialNum">
+                        </div>
+                       <div [hidden]="!viewMode" class="formValues">
+                        <label class="makebold">{{viewOnlyData.reviewModemSerialNum}}</label>
+                       </div>
+                       <br>
+                       <span class="formLabel">Modem Carrier</span>
+                       <div [hidden]="viewMode" class="formValues">
+                           <select id="modemCarrier" name="modemCarrier" placeholder="Select Carrier" class="commonWidth" [(ngModel)]="editData.modemCarrier"
+                               (change)="onSpireMakeChange()">
+                               <option value=undefined disabled selected>Select</option>
+                              <option *ngFor="let modemCarrier of modemCarrierResponse" value={{modemCarrier.key}}>{{modemCarrier.key}}</option>
+                           </select>
+                       </div>
+
+                       <div [hidden]="!viewMode" class="formValues">
+                           <label class="makebold">{{viewOnlyData.reviewModemCarrier}}</label>
+                       </div>
+                       <br>
+                    
+                </div>
+                <div class="col-md-1">
+                    </div>
+                <div class="col-md-4">
+                        <span class="formLabel">Modem Make</span>
+                        <div [hidden]="viewMode" class="formValues">
+                            <select id="modemMake" name="modemMake" placeholder="Select Make" class="commonWidth" [(ngModel)]="editData.modemMake" (change)="onModemMakeChange()">
+                                <option value=undefined disabled selected>Select</option>
+                                <option *ngFor="let manufacturer of modemManufacturerListResponse" value={{manufacturer.key}}>{{manufacturer.key}}</option>
+                            </select>
+                        </div>
+    
+                        <div [hidden]="!viewMode" class="formValues">
+                            <label class="makebold">{{viewOnlyData.reviewModemMake}}</label>
+                        </div>
+                        <br>
+                        <span class="formLabel">Modem Model</span>
+                        <div [hidden]="viewMode" class="formValues">
+                            <select id="modemModel" name="modemModel" placeholder="Select Model" class="commonWidth" [(ngModel)]="editData.modemModel"
+                                (change)="onSpireModelChange()" [disabled]=(disableModemModel)>
+                                <option value=undefined disabled selected>Select</option>
+                                <option *ngFor="let modelAndSerial of modemModelResponse" value={{modelAndSerial.key}}>{{modelAndSerial.key}}</option>
+    
+                            </select>
+                        </div>
+    
+                        <div [hidden]="!viewMode" class="formValues">
+                            <label>{{viewOnlyData.reviewModemModel}}</label>
+                        </div>
+                        <br>
+                </div>
+
+                 <div class="col-md-2">
+
+                 </div>
+            </div>
+             <div class="col-md-12"></div>
+            <div class="row">
+                <!-- <div class="col-md-1 "></div> -->
+               
+                    <div [hidden]="!viewMode">
+                        <div class="row">
+                            <div class="col-md-4 ">
+                                <!-- <button id="backBtn" type="button" name="singlebutton" class="btn-form btn-primary pull-left" (click)="backToSearchForm()">Return to Search Results</button> -->
+                                <jqxButton #backBtn [theme]='"customBlue"' [width]='210' [height]='25' (onClick)="backToSearchForm()" [textImageRelation]='"imageBeforeText"'
+                                    [imgPosition]='"left"' [imgSrc]='"app/images/arrow-left.png"'>
+                                    Return to Search Results</jqxButton>
+                            </div>
+
+                            <div class="col-md-4"></div>
+                               <div class="col-md-4">
+                                    <div class="col-md-4">
+                                       <!-- <button id="editBtn" type="button" name="singlebutton" class="btn-form btn-primary pull-left" (click)="backToEditForm()">Edit Form</button> -->
+                                       <jqxButton #editBtn [theme]='"customBlue"' [width]='100' [height]='25' (onClick)="backToEditForm()">
+                                        Edit Form</jqxButton>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <!-- <button id="deleteBtn" type="button" name="singlebutton" class="btn-form btn-primary pull-left" (click)="deleteFormRule()">Delete Form</button> -->
+                                       <jqxButton #deleteBtn [theme]='"customBlue"' [width]='100' [height]='25' (onClick)="deleteFormRule()">
+                                        Delete Form</jqxButton>
+                                    </div>
+                                    <div class="col-md-4">
+                                    <!-- <button id="reconcileBtn" type="submit" name="singlebutton" class="btn-form btn-primary pull-left"
+                                    disabled>Reconcile</button> -->
+                                    <jqxButton class="searchcolorblue" #reconcileBtn [theme]='"energyblue"' [width]='100' [height]='25'>
+                                    Reconcile</jqxButton>
+                                    </div>
+                              <!-- <div class="col-md-2">
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div [hidden]="viewMode">
+                        <!-- <button id="updateBtn" type="button" name="singlebutton" class="btn-form btn-primary pull-right" 
+                        (click)="updateForm()">Save Changes</button>
+                    <button id="cancelBtn" type="button" name="singlebutton" class="btn-form btn-primary pull-right" 
+                    (click)="backToViewForm()">Cancel</button> -->
+                        <div class="row">
+                            <div class="col-md-4 ">
+                            </div>
+                            <div class="col-md-4 ">
+                                <jqxButton #cancelBtn [theme]='"customBlue"' [width]='100' [height]='25' (click)="backToViewForm()">
+                                    Cancel</jqxButton>
+                            </div>
+                            <div class="col-md-4 ">
+                                <jqxButton class="searchcolorblue" #updateBtn [theme]='"energyblue"' [width]='140' [height]='25' (click)="updateForm()">
+                                    Save Changes</jqxButton>
+                            </div>
+                        </div>
+                    </div>
+                
+                <!-- <div class="col-md-1 "></div> -->
+            </div>
+
+            <formModal #deleteFormModal style="width: 80%">
+                <formModal-header class ="deleteFormTitle">
+                    <h4>
+                        <span>Delete Form - Equipment Serial # {{viewOnlyData.reviewEqpmtSrlNum}} </span>
+                    </h4>
+                </formModal-header>
+                <formModal-content class = "deleteFormContent">
+                    You have chosen to delete the form for equipment serial # {{viewOnlyData.reviewEqpmtSrlNum}}. All details associated with
+                    the form will be deleted forever.
+                    <br/>
+                    <br/> Are you sure you want to delete this form?
+                </formModal-content>
+                <formModal-footer>
+                    <div class="col-md-12">
+                        <br/>
+                        <div class="col-md-6"></div>
+                        <div class="col-md-2">
+                            <button class="deleteFormBtn" (click)="deleteFormModal.close();">No</button>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="deleteFormBtn blueBtn" style = "width: 175px" (click)="deleteFormModal.close();deleteForm();">Yes, Delete this Form</button>
+                            <br/>
+                            <br/>
+                            <br/>
+                        </div>
+                        <div class="col-md-2"></div>
+                        
+                    </div>
+                </formModal-footer>
+            </formModal>
+        </form>
+    </div>
+</div>

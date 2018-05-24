@@ -1,0 +1,99 @@
+.row {
+    padding: 10px;
+}
+
+.col-md-6 {
+    padding: 5px;
+}
+
+
+legend{
+    color: black;
+    float: left; 
+    margin-left: 10px;
+    font-family: Arial; 
+    font-weight: 400;
+    font-size: 13px;
+}
+
+
+.formLabel{
+     color: black;
+    font-family: Arial;
+    font-size: 12px;
+    width: 200px;
+     float: left; 
+}
+
+.formValues{
+     color: black;
+    font-family: Arial;
+    font-size: 12px;
+    width: 150px;
+    height : 40px;
+     float: left; 
+}
+
+.commonWidth{
+    width: 150px;
+}
+
+.successMsg{
+    float: left;
+    height: 30px;
+    width: 80%;
+    color: black;
+    font-family: Arial;
+    font-size: 12px;
+    border: 1px solid floralwhite;
+    background-color: #00FF19; padding-top: 1%;
+    padding-bottom: 2%;
+    padding-right: 3%;
+    padding-left: 2%;
+}
+
+.errorMsg{
+    float: left;
+    height: 40px;
+    width: 65%;
+    color: black;
+    font-family: Arial;
+    font-size: 12px;
+    border: 1px solid red;
+    background-color: palevioletred; padding-top: 1%;
+    padding-bottom: 2%;
+    padding-right: 3%;
+    padding-left: 2%;
+}
+
+
+.subHeadingDiv{
+    float: left;
+    height: 30px;
+    width: 95%;
+    color: black;
+    /* border: 1px solid floralwhite; */
+    background-color:#EFEFEF; padding-top: 1%;
+     padding-bottom: 2%;
+    /* padding-right: 3%; */
+    padding-left: 1%; 
+     font-family: Arial; 
+    font-weight: 400;
+    font-size: 13px;
+}
+
+.headingDiv{
+    float: left;
+    /* height: 30px; */
+    width: 100%;
+    color: black;
+    padding-left: 1%;
+    /* border: 1px solid floralwhite; */
+    /* background-color:#EFEFEF; padding-top: 1%;
+     padding-bottom: 2%; */
+    /* padding-right: 3%; */
+    /* padding-left: 1%;  */
+     font-family: Arial; 
+    font-weight: bold;
+    font-size: 18px;
+}
